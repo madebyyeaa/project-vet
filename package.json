@@ -1,0 +1,14 @@
+{
+  "name": "project-vet",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "madebyyea",
+  "license": "ISC",
+  "description": "1. Konsep merapikan file project"
+}

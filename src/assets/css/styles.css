@@ -1,0 +1,385 @@
+/* Reset & base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f6f8fa;
+    color: #24292e;
+  }
+  
+  a {
+    color: #0366d6;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Container */
+  #app {
+    width : 100%;
+    /* max-width: 1440px; */
+    /* max-height: 1000px; */
+    /* margin: 2rem auto; */
+    background: #fff;
+    /* border-radius: 8px; */
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.1);
+    /* overflow: hidden; */
+  }
+  
+  /* Login Page */
+  #login-page {
+    padding: 8rem 3rem;
+    width: 100%;
+    height: 685px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid blueviolet;
+  }
+  #login-page h1 {
+    margin-bottom: 2.5rem;
+    width: 100%;
+    display: flex;
+    /* border: 1px solid blueviolet; */
+    font-weight: 700;
+    justify-content: center;
+    
+  }
+
+  #login-form {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Label 1 bagian, input 2 bagian */
+    gap: 0.5rem 1rem; /* baris dan kolom spacing */
+    max-width: 600px;
+    margin: 0 auto; /* Center the form */
+    padding: 2rem; /* Add padding for better spacing */
+    background: #ffffff; /* White background for the form */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+ #record-form {
+  display: grid;
+    grid-template-columns: 1fr 2fr; /* Label 1 bagian, input 2 bagian */
+    gap: 0.5rem 1rem; /* baris dan kolom spacing */
+    max-width: 700px;
+    max-height: 300px;
+    /* margin: 0 auto; */
+    padding: 2rem; /* Add padding for better spacing */
+    background: #ffffff; /* White background for the form */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    overflow: scroll;
+ }
+  
+
+  label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  input[type=text], input[type=password] {
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #d1d5da;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+  }
+  input[type=text]:focus, input[type=password]:focus {
+    outline: none;
+    border-color: #0366d6;
+    box-shadow: 0 0 0 3px rgb(3 102 214 / 0.3);
+  }
+  button {
+    background-color: #2ea44f;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #22863a;
+  }
+  .error-message {
+    color: #d73a49;
+    font-weight: 600;
+    margin-top: -1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  /* Dashboard */
+  #dashboard {
+    display: none;
+    height: 100%;
+  }
+  header {
+    background-color: #24292e;
+    color: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  header h2 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+  header button#logout-btn {
+    background: #bf4444;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+    transition: background-color 0.3s;
+  }
+  header button#logout-btn:hover {
+    background: #9e2f2f;
+  }
+  
+  /* Dashboard content grid */
+  #dashboard-content {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+  }
+  nav#sidebar {
+    width: 220px;
+    border-right: 1px solid #e1e4e8;
+  }
+  nav#sidebar ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  nav#sidebar li {
+    margin-bottom: 1rem;
+  }
+  nav#sidebar button {
+    all: unset;
+    cursor: pointer;
+    color: #24292e;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    display: block;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+    width:fit-content;
+  }
+  nav#sidebar button:hover,
+  nav#sidebar button.active {
+    background-color: #0366d6;
+    color: white;
+  }
+  
+  /* Main panel */
+  main#main-panel {
+    flex: 1;
+    padding: 1rem;
+  }
+  main#main-panel h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  /* Add these styles at appropriate location in style.css */
+
+/* Search input styling */
+#search-records {
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+  }
+  #search-records:focus {
+    outline: none;
+    border-color: #0366d6;
+    box-shadow: 0 0 0 3px rgb(3 102 214 / 0.3);
+  }
+  
+  /* Adjust table date column styling */
+  th, td {
+    vertical-align: top;
+    font-size: 10px;
+  }
+  
+  
+  /* Medical Records section */
+  #records-section {
+    display: none;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgb(27 31 35 / 0.12);
+  }
+  th, td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e1e4e8;
+  }
+  th {
+    background-color: #f6f8fa;
+    font-weight: 700;
+  }
+  tr:last-child td {
+    border-bottom: none;
+  }
+  .btn-edit, .btn-delete {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-right: 0.5rem;
+    color: #0366d6;
+  }
+  .btn-delete {
+    color: #d73a49;
+  }
+  .btn-edit:hover {
+    text-decoration: underline;
+  }
+  .btn-delete:hover {
+    text-decoration: underline;
+  }
+  
+  /* Record form */
+  #record-form {
+    margin-bottom: 2rem;
+    background: #f6f8fa;
+    padding: 1rem;
+    border-radius: 6px;
+  }
+  #record-form label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+  #record-form input[type=text],
+  #record-form textarea {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid #d1d5da;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+  }
+  #record-form textarea {
+    min-height: 60px;
+  }
+  #record-form button {
+    background-color: #2ea44f;
+    padding: 0.5rem 1.25rem;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  #record-form button:hover {
+    background-color: #22863a;
+  }
+  #record-form button.cancel-btn {
+    background-color: #d73a49;
+    margin-left: 1rem;
+  }
+  #record-form button.cancel-btn:hover {
+    background-color: #9e2f2f;
+  }
+  
+  /* Welcome message in dashboard */
+  #welcome-message {
+    font-weight: 600;
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Extend existing style.css with these additions */
+
+/* Textarea styles for new fields */
+#record-form textarea {
+    /* Already set in existing styles but ensure consistent height for new fields */
+    min-height: 60px;
+    resize: vertical;
+  }
+  
+  /* New PDF button style inside the table */
+  .btn-pdf {
+    background-color: #0366d6;
+    border: none;
+    border-radius: 6px;
+    padding: 0.3rem 0.8rem;
+    color: white;
+    font-size: 0.85rem;
+    cursor: pointer;
+    margin-left: 0.3rem;
+    transition: background-color 0.3s;
+  }
+  .btn-pdf:hover {
+    background-color: #024a9c;
+  }
+
+  /* Tambahkan efek hover pada baris tabel */
+table tbody tr:hover {
+  background-color: #f0f4f8; /* Warna latar belakang saat hover */
+}
+
+/* Tambahkan padding untuk tabel */
+th, td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e1e4e8;
+}
+
+/* Tambahkan efek transisi pada input dan textarea */
+input[type=text], input[type=password], textarea {
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Tambahkan efek hover pada tombol */
+button {
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  transform: scale(1.02); /* Efek zoom saat hover */
+}
+  
+  
+  /* Responsive adjustments */
+  @media (max-width: 700px) {
+
+    table {
+      font-size: 0.9rem; /* Ukuran font lebih kecil di layar kecil */
+    }
+
+    #dashboard-content {
+      flex-direction: column;
+    }
+    nav#sidebar {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid #e1e4e8;
+      margin-bottom: 1rem;
+    }
+  }
+  
