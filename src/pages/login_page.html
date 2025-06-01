@@ -3,121 +3,30 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Kaleb Vet Dashboard</title>
-<link rel="stylesheet" href="../assets/css/styles.css" />
+<title>Kaleb Vet | Sign In</title>
+<link rel="stylesheet" href="../assets/css/login.css" />
 <!-- jsPDF CDN for PDF generation -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 </head>
 <body>
+<div class="list-logo"></div>
+<img src="../assets/images/kaleb-vet-logo.png" alt="kaleb-logo">
 <div id="app">
-
   <!-- Login Page -->
   <section id="login-page" role="main" aria-label="Login page">
-    <h1>Kaleb Vet Login</h1>
+    <h3>Hai, cantik❤️!</h3>
     <form id="login-form" aria-describedby="login-error">
       <label for="username">Username</label>
       <input type="text" id="username" autocomplete="username" required />
       <label for="password">Password</label>
       <input type="password" id="password" autocomplete="current-password" required />
-      <button type="submit">Sign In</button>
+      <button type="submit">Masuk</button>
+      <a class="create-acount" href="../../public/index.html">Kembali</a>
       <p class="error-message" id="login-error" aria-live="polite" role="alert"></p>
     </form>
   </section>
-
-  <!-- Dashboard -->
-  <section id="dashboard" role="main" aria-label="User dashboard">
-    <header>
-      <h2>Kaleb Vet Dashboard</h2>
-      <button id="logout-btn" aria-label="Logout from dashboard">Logout</button>
-    </header>
-    <div id="dashboard-content">
-
-      <nav id="sidebar" aria-label="Dashboard navigation">
-        <ul>
-          <li><button class="nav-btn active" data-section="records-section" aria-current="page">Rekam Jejak Medis</button></li>
-          <!-- Future nav items can be added here -->
-        </ul>
-      </nav>
-
-      <main id="main-panel">
-        <div id="welcome-message"></div>
-
-        <!-- Medical Records Section -->
-        <section id="records-section" aria-label="Animal medical records">
-          <h3>Rekam Jejak Medis</h3>
-          <form id="record-form" aria-label="Add or edit medical record">
-            <input type="hidden" id="record-id" />
-
-            <label for="animal-name">Nama Hewan</label>
-            <input type="text" id="animal-name" required />
-
-            <label for="animal-breed">Jenis / Ras</label>
-            <input type="text" id="animal-breed" required />
-
-            <label for="animal-age">Umur</label>
-            <input type="text" id="animal-age" placeholder="contoh: 2 tahun, 5 bulan" required />
-
-            <label for="animal-gender">Jenis Kelamin</label>
-            <select id="animal-gender" required>
-              <option value="">Pilih jenis kelamin</option>
-              <option value="Jantan">Jantan</option>
-              <option value="Betina">Betina</option>
-            </select>
-
-            <label for="owner-name">Nama Pemilik</label>
-            <input type="text" id="owner-name" required />
-
-            <label for="owner-phone">No. HP</label>
-            <input type="text" id="owner-phone" required pattern="[\d\s+\-()]+"
-              title="Masukkan nomor telepon yang valid" />
-
-            <label for="owner-address">Alamat</label>
-            <textarea id="owner-address" required></textarea>
-
-            <label for="anamnesa">Anamnesa dan pemeriksaan Fisik</label>
-            <textarea id="anamnesa" required></textarea>
-
-            <label for="diagnosis">Diagnosis</label>
-            <textarea id="diagnosis" required></textarea>
-
-            <label for="therapy">Terapi</label>
-            <textarea id="therapy" required></textarea>
-
-            <button type="submit" id="save-record-btn">Tambah Rekam Jejak</button>
-            <button type="button" id="cancel-edit-btn" class="cancel-btn" style="display:none;">Batal</button>
-          </form>
-
-          <label for="search-records" id="search-label" style="font-weight:600; display:block; margin-bottom:0.5rem; margin-top:1rem;">Cari Rekam Jejak:</label>
-          <input type="text" id="search-records" placeholder="Cari berdasarkan nama hewan, pemilik, diagnosis..." autocomplete="off" aria-describedby="search-info" />
-
-          <table aria-describedby="records-info" role="grid">
-            <thead>
-              <tr>
-                <th>Nama Hewan</th>
-                <th>Ras</th>
-                <th>Umur</th>
-                <th>Jenis Kelamin</th>
-                <th>Nama Pemilik</th>
-                <th>No. HP</th>
-                <th>Alamat</th>
-                <th>Anamnesa &amp; Pemeriksaan Fisik</th>
-                <th>Diagnosis</th>
-                <th>Terapi</th>
-                <th>Tanggal &amp; Waktu</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="records-table-body">
-              <!-- Records rows inserted here -->
-            </tbody>
-          </table>
-          <p id="records-info" aria-live="polite" style="margin-top:0.75rem;"></p>
-        </section>
-      </main>
-    </div>
-  </section>
 </div>
-
-<script src="../../src/assets/js/scripts.js" defer></script>
+<script src="../assets/js/login.js" defer></script>
 </body>
 </html>
+

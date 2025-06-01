@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kaleb Vet | Dashboard</title>
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body>
+  <nav id="topbar" aria-label="Navigasi utama">
+    <h2>Kaleb Vet</h2>
+    <button id="burger-btn" aria-label="Buka navigasi menu" aria-expanded="false" aria-controls="sidebar">
+      &#9776;
+    </button>
+  </nav>
+  
+  <nav id="sidebar" aria-label="Sidebar navigasi" role="navigation" aria-hidden="true">
+    <h2>Kaleb Vet Dashboard</h2>
+    <button class="nav-btn active" data-section="records-section" aria-current="page">Rekam Jejak</button>
+    <button id="logout-btn" class="logout-btn">Keluar</button>
+  </nav>
+  
+  <div id="overlay" tabindex="-1"></div>
+  
+  <main id="main-panel" tabindex="-1">
+    <div id="welcome-message" tabindex="0" aria-live="polite"></div>
+
+    <section id="records-section" class="active">
+      <h3>Rekam Jejak Medis Hewan</h3>
+
+      <form id="record-form" novalidate autocomplete="off" aria-label="Form rekam jejak medis">
+        <input type="hidden" id="record-id" />
+        <div>
+          <label for="animal-name">Nama Hewan</label>
+          <input id="animal-name" name="animal-name" type="text" required autocomplete="off" />
+        </div>
+        <div>
+          <label for="animal-breed">Jenis / Ras</label>
+          <input id="animal-breed" name="animal-breed" type="text" required autocomplete="off" />
+        </div>
+        <div>
+          <label for="animal-age">Umur</label>
+          <input id="animal-age" name="animal-age" type="text" required autocomplete="off" />
+        </div>
+        <div>
+          <label for="animal-gender">Jenis Kelamin</label>
+          <select id="animal-gender" name="animal-gender" required>
+            <option value="">Pilih Jenis Kelamin</option>
+            <option value="Jantan">Jantan</option>
+            <option value="Betina">Betina</option>
+          </select>
+        </div>
+        <div>
+          <label for="owner-name">Nama Pemilik</label>
+          <input id="owner-name" name="owner-name" type="text" required autocomplete="off" />
+        </div>
+        <div>
+          <label for="owner-phone">No. HP</label>
+          <input id="owner-phone" name="owner-phone" type="text" required autocomplete="off" />
+        </div>
+        <div>
+          <label for="owner-address">Alamat</label>
+          <input id="owner-address" name="owner-address" type="text" required autocomplete="off" />
+        </div>
+        <div style="grid-column: 1 / -1;">
+          <label for="anamnesa">Anamnesa dan Pemeriksaan Fisik</label>
+          <textarea id="anamnesa" name="anamnesa" required></textarea>
+        </div>
+        <div style="grid-column: 1 / -1;">
+          <label for="diagnosis">Diagnosis</label>
+          <textarea id="diagnosis" name="diagnosis" required></textarea>
+        </div>
+        <div style="grid-column: 1 / -1;">
+          <label for="therapy">Terapi</label>
+          <textarea id="therapy" name="therapy" required></textarea>
+        </div>
+        <div id="buttons-group">
+          <button type="submit" id="save-record-btn">Tambah Rekam Jejak</button>
+          <button type="button" id="cancel-edit-btn">Batal</button>
+        </div>
+      </form>
+
+      <input type="search" placeholder="Cari rekam jejak..." id="search-records" aria-label="Cari rekam jejak" />
+
+      <div id="records-info" aria-live="polite"></div>
+
+      <div class="table-container">
+        <table aria-label="Daftar rekam jejak medis hewan">
+        <thead>
+          <tr>
+            <th>Nama Hewan</th>
+            <th>Jenis / Ras</th>
+            <th>Umur</th>
+            <th>Jenis Kelamin</th>
+            <th>Nama Pemilik</th>
+            <th>No. HP</th>
+            <th>Alamat</th>
+            <th>Anamnesa</th>
+            <th>Diagnosis</th>
+            <th>Terapi</th>
+            <th>Tanggal</th>
+            <th>Menu</th>
+          </tr>
+        </thead>
+        <tbody id="records-table-body"></tbody>
+      </table>
+      </div>
+    </section>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+</body>
+</html>
+

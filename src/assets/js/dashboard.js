@@ -1,12 +1,10 @@
 (() => {
-  const {
-    jsPDF
-  } = window.jspdf;
+  const { jsPDF } = window.jspdf;
 
-  const loginPage = document.getElementById('login-page');
-  const dashboard = document.getElementById('dashboard');
-  const loginForm = document.getElementById('login-form');
-  const loginError = document.getElementById('login-error');
+  // ELEMENTS
+  const burgerBtn = document.getElementById('burger-btn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
   const logoutBtn = document.getElementById('logout-btn');
   const welcomeMessage = document.getElementById('welcome-message');
   const navButtons = document.querySelectorAll('nav#sidebar .nav-btn');
@@ -31,77 +29,51 @@
   const recordsInfo = document.getElementById('records-info');
   const searchInput = document.getElementById('search-records');
 
-  // User data
-  const defaultUser = {
-    username: 'vetadmin',
-    password: 'vet123',
-    fullname: 'Drh. Delsa Nataya Honnesy Saragih'
-  };
-  if (!localStorage.getItem('users')) {
-    localStorage.setItem('users', JSON.stringify([defaultUser]));
-  }
+  // Helper functions for localStorage user & records
+  const clearLoggedInUser  = () => localStorage.removeItem('loggedInUser ');
 
-  function isLoggedIn() {
-    return !!localStorage.getItem('loggedInUser');
-  }
+  const isLoggedIn = () => !!localStorage.getItem('loggedInUser ');
 
-  function getLoggedInUser() {
-    return JSON.parse(localStorage.getItem('loggedInUser') || 'null');
-  }
+  const getLoggedInUser  = () => JSON.parse(localStorage.getItem('loggedInUser ') || 'null');
 
-  function setLoggedInUser(user) {
-    localStorage.setItem('loggedInUser', JSON.stringify(user));
-  }
-
-  function clearLoggedInUser() {
-    localStorage.removeItem('loggedInUser');
-  }
-
-  function showSection(sectionId) {
-    sections.forEach(section => {
-      section.style.display = (section.id === sectionId) ? 'block' : 'none';
-    });
-    navButtons.forEach(btn => {
-      if (btn.dataset.section === sectionId) {
-        btn.classList.add('active');
-        btn.setAttribute('aria-current', 'page');
-      } else {
-        btn.classList.remove('active');
-        btn.removeAttribute('aria-current');
-      }
-    });
-  }
-
-  // Records management
-  function getRecords() {
-    let records = localStorage.getItem('medicalRecords');
+  const getRecords = () => {
+    const records = localStorage.getItem('medicalRecords');
     return records ? JSON.parse(records) : [];
-  }
+  };
 
-  function saveRecords(records) {
-    localStorage.setItem('medicalRecords', JSON.stringify(records));
-  }
+  const saveRecords = (records) => localStorage.setItem('medicalRecords', JSON.stringify(records));
 
-  function formatDateTime(dateStr) {
+  // Utilities
+  const formatDateTime = (dateStr) => {
     const d = new Date(dateStr);
     if (isNaN(d)) return '';
-    const pad = n => n.toString().padStart(2, '0');
-    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-  }
+    const pad = (n) => n.toString().padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  };
 
-  function escapeHtml(text) {
-    return text.replace(/[&<>"']/g, function(m) {
-      return {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;'
-      }[m];
+  const escapeHtml = (text) => text.replace(/[&<>"']/g, (m) => {
+    return {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+    }[m];
+  });
+
+  // Navigation & Sections
+  const showSection = (sectionId) => {
+    sections.forEach((section) => {
+      section.classList.toggle('active', section.id === sectionId);
     });
-  }
+    navButtons.forEach((btn) => {
+      btn.classList.toggle('active', btn.dataset.section === sectionId);
+      btn.setAttribute('aria-current', btn.dataset.section === sectionId ? 'page' : 'false');
+    });
+  };
 
-  function clearRecordForm() {
+  // Record Form Handling
+  const clearRecordForm = () => {
     recordIdInput.value = '';
     animalNameInput.value = '';
     animalBreedInput.value = '';
@@ -115,13 +87,13 @@
     therapyInput.value = '';
     saveRecordBtn.textContent = 'Tambah Rekam Jejak';
     cancelEditBtn.style.display = 'none';
-  }
+  };
 
-  function renderRecordsTable() {
+  const renderRecordsTable = () => {
     const filterText = searchInput.value.trim().toLowerCase();
     let records = getRecords();
     if (filterText) {
-      records = records.filter(r =>
+      records = records.filter((r) =>
         r.animalName.toLowerCase().includes(filterText) ||
         r.animalBreed.toLowerCase().includes(filterText) ||
         r.animalAge.toLowerCase().includes(filterText) ||
@@ -134,7 +106,6 @@
         r.therapy.toLowerCase().includes(filterText)
       );
     }
-
     recordsTableBody.innerHTML = '';
     if (records.length === 0) {
       recordsInfo.textContent = filterText ? 'Tidak ada rekam jejak yang cocok dengan pencarian.' : 'Belum ada rekam jejak medis.';
@@ -142,7 +113,6 @@
     } else {
       recordsInfo.textContent = filterText ? `Menampilkan ${records.length} hasil pencarian.` : `Total rekam jejak medis: ${records.length}`;
     }
-
     records.forEach((record, index) => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
@@ -158,23 +128,23 @@
         <td>${escapeHtml(record.therapy)}</td>
         <td>${formatDateTime(record.timestamp)}</td>
         <td>
-          <button class="btn-edit" aria-label="Edit record ${escapeHtml(record.animalName)}" data-index="${index}">Edit</button>
-          <button class="btn-delete" aria-label="Delete record ${escapeHtml(record.animalName)}" data-index="${index}">Delete</button>
-          <button class="btn-pdf" aria-label="Cetak PDF record ${escapeHtml(record.animalName)}" data-index="${index}">Cetak PDF</button>
+          <button class="btn-edit" aria-label="Edit rekam jejak ${escapeHtml(record.animalName)}" data-index="${index}">Edit</button>
+          <button class="btn-delete" aria-label="Hapus rekam jejak ${escapeHtml(record.animalName)}" data-index="${index}">Delete</button>
+          <button class="btn-pdf" aria-label="Cetak PDF rekam jejak ${escapeHtml(record.animalName)}" data-index="${index}">PDF</button>
         </td>
       `;
       recordsTableBody.appendChild(tr);
     });
-  }
+  };
 
-  // PDF generation function
-  function generatePDF(record) {
+  // PDF Generator
+  const generatePDF = (record) => {
     const doc = new jsPDF();
     const marginLeft = 15;
     let y = 10;
 
     doc.setFontSize(18);
-    doc.text('Rekam Jejak Medis Hewan', 105, y, null, null, 'center');
+    doc.text('Rekam Jejak Medis Hewan', 105, y, { align: 'center' });
     y += 10;
     doc.setDrawColor(0);
     doc.setLineWidth(0.5);
@@ -232,62 +202,70 @@
     doc.setFont(undefined, 'normal');
     doc.text(formatDateTime(record.timestamp), marginLeft + 50, y);
 
-    doc.save(`rekam_medis_${record.animalName.replace(/\s+/g, '_').toLowerCase()}.pdf`);
-  }
+    const fileName = `rekam_medis_${record.animalName.replace(/\s+/g, '_').toLowerCase()}.pdf`;
+    doc.save(fileName);
+  };
 
-  function initApp() {
-    if (isLoggedIn()) {
-      loginPage.style.display = 'none';
-      dashboard.style.display = 'block';
-      const user = getLoggedInUser();
-      welcomeMessage.textContent = `Selamat datang, ${user.fullname}!`;
-      showSection('records-section');
-      renderRecordsTable();
+  // Sidebar functions
+  const closeSidebar = () => {
+    sidebar.classList.remove('open');
+    sidebar.setAttribute('aria-hidden', 'true');
+    burgerBtn.setAttribute('aria-expanded', 'false');
+    overlay.classList.remove('show');
+  };
+
+  const openSidebar = () => {
+    sidebar.classList.add('open');
+    sidebar.setAttribute('aria-hidden', 'false');
+    burgerBtn.setAttribute('aria-expanded', 'true');
+    overlay.classList.add('show');
+  };
+
+  const toggleSidebar = () => {
+    if (sidebar.classList.contains('open')) {
+      closeSidebar();
     } else {
-      loginPage.style.display = 'block';
-      dashboard.style.display = 'none';
-      loginForm.reset();
-      loginError.textContent = '';
+      openSidebar();
     }
-  }
+  };
 
-  // Event listeners
-
-  loginForm.addEventListener('submit', e => {
-    e.preventDefault();
-    loginError.textContent = '';
-    const username = loginForm.username.value.trim();
-    const password = loginForm.password.value;
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const matchedUser = users.find(u => u.username === username && u.password === password);
-    if (matchedUser) {
-      // Save logged in user to localStorage
-      localStorage.setItem('loggedInUser', JSON.stringify(matchedUser));
-      // Redirect to dashboard page
-      window.location.href = 'dashboard.html';
-    } else {
-      loginError.textContent = 'Username atau password salah.';
+  // Initialization
+  const initApp = () => {
+    if (!isLoggedIn()) {
+      window.location.href = 'login_page.html';
+      return;
     }
-  });
+    const user = getLoggedInUser ();
+    welcomeMessage.textContent = `Selamat datang, ${user.fullname}!`;
+    showSection('records-section');
+    renderRecordsTable();
+    clearRecordForm();
 
-  logoutBtn.addEventListener('click', () => {
-    clearLoggedInUser();
-    window.location.href = 'login-page.html';
-    initApp();
-  });
-
-  navButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      showSection(btn.dataset.section);
+    // Close sidebar on nav button click (mobile)
+    navButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        showSection(btn.dataset.section);
+        if (window.innerWidth < 600) {
+          closeSidebar();
+        }
+      });
     });
+  };
+
+  // Event Listeners
+  burgerBtn.addEventListener('click', toggleSidebar);
+  overlay.addEventListener('click', closeSidebar);
+  logoutBtn.addEventListener('click', () => {
+    clearLoggedInUser ();
+    window.location.href = 'login_page.html';
   });
 
-  cancelEditBtn.addEventListener('click', e => {
+  cancelEditBtn.addEventListener('click', (e) => {
     e.preventDefault();
     clearRecordForm();
   });
 
-  recordForm.addEventListener('submit', e => {
+  recordForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const id = recordIdInput.value;
     const animalName = animalNameInput.value.trim();
@@ -301,7 +279,6 @@
     const diagnosis = diagnosisInput.value.trim();
     const therapy = therapyInput.value.trim();
 
-    // Basic validation
     if (!animalName || !animalBreed || !animalAge || !animalGender || !ownerName || !ownerPhone || !ownerAddress || !anamnesa || !diagnosis || !therapy) {
       alert('Semua field harus diisi dengan benar.');
       return;
@@ -311,7 +288,6 @@
     const currentTimestamp = new Date().toISOString();
 
     if (id === '') {
-      // Add new record with timestamp
       records.push({
         animalName,
         animalBreed,
@@ -323,10 +299,9 @@
         anamnesa,
         diagnosis,
         therapy,
-        timestamp: currentTimestamp
+        timestamp: currentTimestamp,
       });
     } else {
-      // Edit existing record, update timestamp
       const idx = parseInt(id, 10);
       if (idx >= 0 && idx < records.length) {
         records[idx] = {
@@ -340,7 +315,7 @@
           anamnesa,
           diagnosis,
           therapy,
-          timestamp: currentTimestamp
+          timestamp: currentTimestamp,
         };
       }
     }
@@ -349,7 +324,7 @@
     renderRecordsTable();
   });
 
-  recordsTableBody.addEventListener('click', e => {
+  recordsTableBody.addEventListener('click', (e) => {
     const target = e.target;
     if (target.classList.contains('btn-edit')) {
       const index = target.dataset.index;
@@ -369,10 +344,7 @@
         therapyInput.value = record.therapy;
         saveRecordBtn.textContent = 'Simpan Perubahan';
         cancelEditBtn.style.display = 'inline-block';
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         animalNameInput.focus();
       }
     } else if (target.classList.contains('btn-delete')) {
@@ -394,9 +366,8 @@
     }
   });
 
-  searchInput.addEventListener('input', () => {
-    renderRecordsTable();
-  });
+  searchInput.addEventListener('input', renderRecordsTable);
 
+  // Jalankan inisialisasi aplikasi
   initApp();
 })();
