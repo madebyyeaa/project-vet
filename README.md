@@ -24,3 +24,4 @@
 2. Pertama buat landing page : index.html
 3. Kedua rapikan media query css mobil first approach
 4. Buat fitur burger button untuk halaman mobilenya
+5. Second Commit, Merapikan tampilan device dan file system.
